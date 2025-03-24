@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+notebook/IMG_CLASSES/
 develop-eggs/
 dist/
 downloads/
