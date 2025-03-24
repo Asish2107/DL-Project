@@ -132,6 +132,7 @@ def generate_report(input_csv, output_csv):
     df.to_csv(output_csv, index=False)
     print(f"[✓] Report generated and saved to: {output_csv}")
 
+
 # ---------- Main Function ---------- #
 if __name__ == "__main__":
     input_csv = "medical_dataset_5000_rows.csv"
