@@ -5,14 +5,13 @@ from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-from src.components.data_transformation import DataTransformation
-from src.components.model_trainer import ModelTrainer
+
+# from src.components.data_transformation import DataTransformation
+# from src.components.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = os.path.join('artifacts', "train.csv")
-    test_data_path: str = os.path.join('artifacts', "test.csv")
-    raw_data_path: str = os.path.join('artifacts', "data.csv")
+    base_dir:str = "notebook/"
 
 class DataIngestion:
     def __init__(self):
@@ -21,35 +20,63 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method")
         try:
-            df = pd.read_csv('notebook/data/data_set.csv')
-            df= df.drop(columns= ['ID', 'Cancer Stage', 'Survival Rate (5-Year, %)', 'Cost of Treatment (USD)', 'Economic Burden (Lost Workdays per Year)', 'HPV Infection', 'Chronic Sun Exposure', 'Poor Oral Hygiene', 'Diet (Fruits & Vegetables Intake)', 'Family History of Cancer', 'Compromised Immune System', 'Oral Lesions', 'Unexplained Bleeding', 'Difficulty Swallowing', 'White or Red Patches in Mouth', 'Treatment Type', 'Early Diagnosis'])
-            df.columns = df.columns.str.replace(r'[\s\(\)]', '_', regex=True)\
-                       .str.replace(r'_+', '_', regex=True)\
-                       .str.strip('_')
-            logging.info(f"{df['Oral_Cancer_Diagnosis'].value_counts()}")
+            # Define paths to each skin disease class image folder
+            Eczema_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "1. Eczema 1677")
+            Warts_Molluscum_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "10. Warts Molluscum and other Viral Infections - 2103")
+            Atopic_Dermatitis_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "3. Atopic Dermatitis - 1.25k")
+            Melanocytic_Nevi_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "5. Melanocytic Nevi (NV) - 7970")
+            Psoriasis_pictures_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "7. Psoriasis pictures Lichen Planus and related diseases - 2k")
+            Seborrheic_Keratoses_Benign_Tumors_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "8. Seborrheic Keratoses and other Benign Tumors - 1.8k")
+            Tinea_Ringworm_Candidiasis_dir = os.path.join(self.ingestion_config.base_dir, "IMG_CLASSES", "9. Tinea Ringworm Candidiasis and other Fungal Infections - 1.7k")
+
+            # Initialize lists to store image filepaths and corresponding labels
+            filepaths = []
+            labels = []
+
+            # List of all directory paths
+            dict_list = [Eczema_dir, Warts_Molluscum_dir , Atopic_Dermatitis_dir, Melanocytic_Nevi_dir,Psoriasis_pictures_dir ,Seborrheic_Keratoses_Benign_Tumors_dir ,Tinea_Ringworm_Candidiasis_dir]
+
+            # Class label names for each folder (used to tag each image correctly)
+            class_labels = ['Eczema', 'Warts Molluscum', 'Atopic Dermatitis','Melanocytic Nevi', 'Psoriasis pictures', 'Seborrheic Keratoses Benign Tumors','Tinea Ringworm Candidiasis']
+
+            # Loop through each directory, collect image file paths and attach respective labels
+            for i, j in enumerate(dict_list):
+                  flist = os.listdir(j) # List of all image files in that folder(Provided directory)
+                  for f in flist:
+                        fpath = os.path.join(j, f)
+                        filepaths.append(fpath)
+                        labels.append(class_labels[i])
+
+            # Convert file paths and labels into pandas Series
+            Fseries = pd.Series(filepaths, name="filepaths")
+            Lseries = pd.Series(labels, name="labels")
+
+            # Combine into a DataFrame (our master image-label mapping file)
+            skin_data = pd.concat([Fseries, Lseries], axis=1)
+            skin_df = pd.DataFrame(skin_data)
+
+            # Count of images per class label
+            logging.info(f"{skin_df['labels'].value_counts()}")
             logging.info('Dataset read as DataFrame')
 
-            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
-            df.to_csv(self.ingestion_config.raw_data_path, index=False)
-
             logging.info("Train test split initiated")
-            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
+            # Split the dataset into train and test sets (70%-30%)
+            train_images, test_images = train_test_split(skin_df, test_size=0.3, random_state=42)
 
-            train_set.to_csv(self.ingestion_config.train_data_path, index=False)
-            test_set.to_csv(self.ingestion_config.test_data_path, index=False)
-
+            # Split again into validation (20% of total dataset)
+            train_set, val_set = train_test_split(skin_df, test_size=0.2, random_state=42)
             logging.info("Ingestion completed")
-            return self.ingestion_config.train_data_path, self.ingestion_config.test_data_path
+            return train_images,test_images,train_set,val_set
 
         except Exception as e:
             raise CustomException(e, sys)
 
 if __name__ == "__main__":
     obj = DataIngestion()
-    train_data, test_data = obj.initiate_data_ingestion()
+    train_images,test_images,train_set,val_set = obj.initiate_data_ingestion()
 
-    data_transformation = DataTransformation()
-    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+    # data_transformation = DataTransformation()
+    # train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
-    model_trainer = ModelTrainer()
-    print(model_trainer.initiate_model_trainer(train_arr, test_arr))
+    # model_trainer = ModelTrainer()
+    # print(model_trainer.initiate_model_trainer(train_arr, test_arr))
