@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 import pandas as pd
@@ -12,8 +12,7 @@ app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 pipeline = PredictPipeline()
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 def process_health_data(form_data):
     health_data = {
@@ -30,39 +29,39 @@ def process_health_data(form_data):
     }
     return pd.Series(health_data)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
-    health_report = None
-    skin_result = None
-    confidence = None
-    img_path = None
+    return render_template('home.html')
 
-    if request.method == 'POST':
-        # Process health parameters
-        try:
-            health_series = process_health_data(request.form)
-            health_report = generate_health_summary(health_series)
-        except Exception as e:
-            return render_template('home.html', error=f"Error processing health data: {str(e)}")
+@app.route('/analyze_health', methods=['POST'])
+def analyze_health():
+    try:
+        health_series = process_health_data(request.form)
+        health_report = generate_health_summary(health_series)
+        return render_template('home.html', health_report=health_report)
+    except Exception as e:
+        return render_template('home.html', error=f"Error processing health data: {str(e)}")
 
-        # Process skin image if uploaded
-        if 'file' in request.files:
-            file = request.files['file']
-            if file.filename != '' and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(save_path)
-                
-                class_name, conf = pipeline.predict(save_path)
-                skin_result = class_name
-                confidence = round(conf * 100, 2)
-                img_path = save_path
+@app.route('/analyze_skin', methods=['POST'])
+def analyze_skin():
+    if 'file' not in request.files:
+        return render_template('home.html', error="No file part in request")
 
-    return render_template('home.html',
-                         health_report=health_report,
-                         skin_result=skin_result,
-                         confidence=confidence,
-                         img_path=img_path)
+    file = request.files['file']
+    if file.filename == '':
+        return render_template('home.html', error="No selected file")
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(save_path)
+
+        class_name, conf = pipeline.predict(save_path)
+        confidence = round(conf * 100, 2)
+
+        return render_template('home.html', skin_result=class_name, confidence=confidence, img_path=filename)
+
+    return render_template('home.html', error="Invalid file type")
 
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
