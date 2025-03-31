@@ -10,7 +10,7 @@ from src.components.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
-    base_dir:str = "notebook/"
+    base_dir:str = "/Users/kasish/Desktop/JGASVEMLKNPR-PROJECT/DL-Project/notebook/"
 
 class DataIngestion:
     def __init__(self):
