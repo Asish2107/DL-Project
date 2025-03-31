@@ -63,8 +63,8 @@ class ModelTrainer:
             test_loss, test_accuracy = transfer_learning_model.evaluate(test)
             logging.info(f'Test Accuracy: {test_accuracy * 100:.2f}%')
             accuracy = test_accuracy * 100
-            # transfer_learning_model.save("SKIN Diseases.h5")
-            save_object(self.model_trainer_config.trained_model_file_path, transfer_learning_model)
+            transfer_learning_model.save(self.model_trainer_config.trained_model_file_path,save_format='h5')
+            # save_object(self.model_trainer_config.trained_model_file_path, transfer_learning_model)
 
             return {"accuracy": accuracy}
 
