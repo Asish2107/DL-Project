@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health & Skin Analysis</title>
+    <title>Health+ Skin+ Doc AI Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styling */
+        /* Existing styles remain unchanged */
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #00c6ff, #0072ff);
@@ -16,18 +16,12 @@
             text-align: center;
         }
 
-        h1, h2 {
-            font-weight: 600;
-        }
-
-        /* Container */
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Sections */
         .section {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
@@ -38,39 +32,15 @@
             transition: transform 0.3s;
         }
 
-        .section:hover {
-            transform: scale(1.02);
-        }
-
-        /* Form Grid */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
         }
 
-        label {
-            font-weight: 600;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        input:focus, select:focus {
-            outline: 2px solid #0072ff;
-        }
-
-        /* Button */
         button {
             background: #ff8c00;
             color: white;
-            font-size: 16px;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -78,25 +48,12 @@
             transition: 0.3s;
         }
 
-        button:hover {
-            background: #ff6c00;
-        }
-
-        /* Upload Box */
         .upload-box {
             border: 2px dashed white;
             padding: 20px;
-            text-align: center;
             border-radius: 10px;
-            transition: 0.3s;
         }
 
-        .upload-box:hover {
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-        }
-
-        /* Results */
         .result {
             background: rgba(0, 0, 0, 0.5);
             padding: 15px;
@@ -105,34 +62,35 @@
             text-align: left;
         }
 
-        .result p {
+        /* New RAG-specific styles */
+        .rag-question {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #00c6ff;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
             font-size: 16px;
-            line-height: 1.6;
         }
 
-        /* Image Preview */
-        img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        .source-list {
+            list-style-type: none;
+            padding-left: 0;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
+        .source-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🩺 Comprehensive Health & Skin Analysis</h1>
+        <h1>🏥 AI Health Suite: Analysis + Document Assistant</h1>
 
         <!-- Health Analysis Section -->
         <div class="section">
-            <h2>📊 Health Parameters</h2>
+            <h2>📊 Health Parameters Analysis</h2>
             <form method="post" action="/analyze_health">
                 <div class="form-grid">
                     <div>
@@ -194,7 +152,6 @@
             <h2>📷 Skin Disease Detection</h2>
             <form method="post" action="/analyze_skin" enctype="multipart/form-data">
                 <div class="upload-box">
-                    <h3>🔍 Upload Skin Image</h3>
                     <input type="file" name="file" accept="image/*" required>
                     <br><br>
                     <button type="submit">📸 Analyze Skin</button>
@@ -202,23 +159,56 @@
             </form>
         </div>
 
-        <!-- Health Report -->
+        <!-- Document Q&A Assistant -->
+        <div class="section">
+            <h2>📚 Medical Document Assistant</h2>
+            <form method="post" action="/ask_docs">
+                <input type="text" class="rag-question" name="question" 
+                       placeholder="Ask about medical documents (e.g., 'What are COVID symptoms?'" required>
+                <br><br>
+                <button type="submit" style="background: #00c6ff;">🔍 Ask Documents</button>
+            </form>
+
+            {% if rag_answer %}
+            <div class="result">
+                <h3>💡 AI Answer:</h3>
+                <p>{{ rag_answer }}</p>
+                
+                {% if rag_sources %}
+                <h3>📄 Source Documents:</h3>
+                <ul class="source-list">
+                    {% for source in rag_sources %}
+                    <li>📁 {{ source }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if rag_error %}
+            <div class="result" style="color: #ff4444;">
+                <p>❌ Error: {{ rag_error }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Health Report Results -->
         {% if health_report %}
         <div class="section result">
             <h2>📜 Health Analysis Report</h2>
-            <p><strong>🩺 Health Summary:</strong> {{ health_report[0] }}</p>
+            <p><strong>🩺 Summary:</strong> {{ health_report[0] }}</p>
             <p><strong>📌 Recommendations:</strong> {{ health_report[1] }}</p>
         </div>
         {% endif %}
 
-        <!-- Skin Disease Report -->
+        <!-- Skin Analysis Results -->
         {% if skin_result %}
         <div class="section result">
-            <h2>🩹 Skin Disease Analysis</h2>
-            <p><strong>🔬 Detected Class:</strong> {{ skin_result }}</p>
-            <p><strong>📊 Confidence:</strong> {{ confidence }}%</p>
+            <h2>🔬 Skin Analysis Report</h2>
+            <p><strong>Diagnosis:</strong> {{ skin_result }}</p>
+            <p><strong>Confidence:</strong> {{ confidence }}%</p>
             {% if img_path %}
-                <img src="{{ url_for('static', filename='uploads/' + img_path.split('/')[-1]) }}" alt="Uploaded Image">
+                <img src="{{ url_for('static', filename='uploads/' + img_path.split('/')[-1]) }}" alt="Skin Image">
             {% endif %}
         </div>
         {% endif %}
