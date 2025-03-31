@@ -9,4 +9,8 @@ pydot
 graphviz
 Flask
 dill
+llama-index
+openai
+pypdf
+python-dotenv
 -e .
