@@ -3,7 +3,6 @@ import sys
 from dataclasses import dataclass
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object
 import tensorflow as tf  # TensorFlow backend
 from tensorflow import keras  # TensorFlow's Keras API
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2

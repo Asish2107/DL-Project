@@ -7,10 +7,14 @@ import numpy as np
 class PredictPipeline:
     def __init__(self):
         self.model_path = os.path.abspath(os.path.join(os.path.dirname(__file__),"src/components/artifacts/SKIN Diseases.h5"))
-        self.class_names = [
-            'Eczema', 'Warts Molluscum', 'Atopic Dermatitis',
-            'Melanocytic Nevi', 'Psoriasis pictures',
-            'Seborrheic Keratoses Benign Tumors', 'Tinea Ringworm Candidiasis'
+        self.class_names = self.class_names = [
+            'Atopic Dermatitis',
+            'Eczema',
+            'Melanocytic Nevi',
+            'Psoriasis pictures',
+            'Seborrheic Keratoses Benign Tumors',
+            'Tinea Ringworm Candidiasis',
+            'Warts Molluscum'
         ]
 
         # Verify model file exists
@@ -18,7 +22,7 @@ class PredictPipeline:
             raise FileNotFoundError(f"Model file not found at {self.model_path}")
         
         self.model = self.load_model()
-        
+
     def load_model(self):
         """Load the trained model"""
         return tf.keras.models.load_model(self.model_path)
