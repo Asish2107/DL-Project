@@ -6,7 +6,6 @@
     <title>Health+ Skin+ Doc AI Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Existing styles remain unchanged */
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #00c6ff, #0072ff);
@@ -23,54 +22,83 @@
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .section h2 {
+            color: white; /* Set heading color to white */
+            font-size: 2em;
+            font-weight: 500;
             margin-bottom: 20px;
-            transition: transform 0.3s;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 20px;
         }
 
         button {
             background: #ff8c00;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background: #ff6f00;
+            transform: scale(1.05);
         }
 
         .upload-box {
             border: 2px dashed white;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .upload-box:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .result {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
             text-align: left;
         }
 
-        /* New RAG-specific styles */
         .rag-question {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
             border: 2px solid #00c6ff;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.8);
             color: #333;
-            font-size: 16px;
+            font-size: 18px;
+            transition: border 0.3s;
+        }
+
+        .rag-question:focus {
+            border-color: #ff8c00;
+            outline: none;
         }
 
         .source-list {
@@ -79,18 +107,37 @@
         }
 
         .source-list li {
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        /* Media Query for smaller screens */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🏥 AI Health Suite: Analysis + Document Assistant</h1>
+        <h1>🏥 AI Health Suite: Analysis + LLM Assistant</h1>
 
         <!-- Health Analysis Section -->
         <div class="section">
-            <h2>📊 Health Parameters Analysis</h2>
+            <h2>📊 Blood Report Analysis</h2>
             <form method="post" action="/analyze_health">
                 <div class="form-grid">
                     <div>
@@ -161,10 +208,10 @@
 
         <!-- Document Q&A Assistant -->
         <div class="section">
-            <h2>📚 Medical Document Assistant</h2>
+            <h2>📚 LLM Assistant</h2>
             <form method="post" action="/ask_docs">
                 <input type="text" class="rag-question" name="question" 
-                       placeholder="Ask about medical documents (e.g., 'What are COVID symptoms?'" required>
+                       placeholder="Ask about any medical queries" required>
                 <br><br>
                 <button type="submit" style="background: #00c6ff;">🔍 Ask Documents</button>
             </form>
@@ -195,7 +242,7 @@
         <!-- Health Report Results -->
         {% if health_report %}
         <div class="section result">
-            <h2>📜 Health Analysis Report</h2>
+            <h2>📜 Blood Analysis Report</h2>
             <p><strong>🩺 Summary:</strong> {{ health_report[0] }}</p>
             <p><strong>📌 Recommendations:</strong> {{ health_report[1] }}</p>
         </div>
