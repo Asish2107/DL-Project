@@ -3,13 +3,13 @@
 [![GitHub Stars](https://img.shields.io/github/stars/Asish2107/DL-Project?style=social)](https://github.com/Asish2107/DL-Project/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A comprehensive health analysis system integrating skin condition prediction, health parameter evaluation, and medical document Q&A using Retrieval-Augmented Generation (RAG).
+A comprehensive health analysis system integrating skin condition prediction based on the user provided images, health parameter evaluation, and medical document Q&A using Retrieval-Augmented Generation (RAG).
 
 ## Features
 
 ### 🩺 Skin Condition Analysis
 - MobileNetV2-based image classification
-- 85% accuracy on common skin conditions
+- 85% accuracy on skin conditions of type Eczema, Atopic Dermatitis, Melanocytic Nevi, Psoriasis,Seborrheic Keratoses, Tinea Ringworm Candidiasis and Warts Molluscum.
 - Real-time confidence scoring
 
 ### 📊 Health Report Generation
@@ -20,7 +20,7 @@ A comprehensive health analysis system integrating skin condition prediction, he
 ### 📚 Medical Document Q&A
 - RAG system with Mistral-7B LLM
 - FAISS vector database for document retrieval
-- Source citation for answers
+- Source citation(Input PDF Documents) for answers
 
 ## Installation
 
@@ -41,8 +41,8 @@ pip install -r requirements.txt
 
 ```bash
 Copy
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull mistral
+ollama serve # Run this command in one terminal for the continous run of ollama model.
+ollama pull mistral # Run this command in new terminal.
 ```
 
 ## Usage
@@ -50,13 +50,12 @@ ollama pull mistral
  Start the Flask server:
 
 ```bash
-Copy
 python app.py
 Access web interface at http://localhost:5001
 
 Use features through web UI:
 
-Skin Analysis: Upload dermatology images
+Skin Analysis: Upload dermatology images(note - as of now this model was trained on skin diseases on type Eczema, Atopic Dermatitis, Melanocytic Nevi, Psoriasis,Seborrheic Keratoses, Tinea Ringworm Candidiasis and Warts Molluscum)
 
 Health Report: Input health parameters
 
