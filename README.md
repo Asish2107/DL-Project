@@ -57,14 +57,14 @@ Skin Analysis: Upload dermatology images(note - For now this model is trained on
 
 Health Report: Input health parameters
 
-Document Q&A: Ask questions about medical texts
+Document Q&A: Ask any medical related questions.
 ```
 
 ## Project Structure
 ```bash
 DL-Project/
 ├── data/                  # Source documents for RAG system
-├── notebook/              # EDA performed on skin condition prediction data set
+├── notebook/              # EDA performed on different skin conditions data set
 ├── src/
 │   ├── components/        # Health report rules engine & Skin condition model training.
 │   └── exception.py       # Exception Handling
