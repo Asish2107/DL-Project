@@ -25,19 +25,19 @@ A comprehensive health analysis system integrating skin condition prediction, he
 ## Installation
 
 1. Clone repository:
-bash
+```bash
 git clone https://github.com/Asish2107/DL-Project.git
 cd DL-Project
 
 2. Install dependencies:
 
-bash
+```bash
 Copy
 pip install -r requirements.txt
 
 3. Set up Ollama (required for Q&A system):
 
-bash
+```bash
 Copy
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull mistral
