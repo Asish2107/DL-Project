@@ -118,46 +118,44 @@ LangChain for RAG implementation
 Sentence Transformers for embeddings
 
 ```mermaid
-flowchart TD
-    A[User Input] -->|Upload Image| B[Skin Condition Analysis]
-    A -->|Enter Health Parameters| C[Health Report Generation]
-    A -->|Upload Medical Document / Ask Question| D[Medical Document Q&A]
-
-    B --> B1[MobileNetV2 Model]
-    B1 --> B2[Skin Condition Prediction]
-    B2 --> B3[Real-time Confidence Scoring]
-
-    C --> C1[Parameter Analysis (BMI, BP, etc.)]
-    C1 --> C2[Rule-Based Risk Assessment]
-    C2 --> C3[Personalized Recommendations]
-
-    D --> D1[RAG System with Mistral-7B]
-    D1 --> D2[FAISS Vector Store]
-    D2 --> D3[Contextual Answer Generation]
-    D3 --> D4[Source Citation]
-
-    subgraph Backend Components
-        E1[Flask Web Server]
-        E2[app.py]
-        E3[predict_pipeline.py]
-        E4[rag_system.py]
-        E5[src/components/]
-    end
-
-    B3 --> E3
-    C3 --> E5
-    D4 --> E4
-    E1 --> E2
-    E1 --> E3
-    E1 --> E4
-
-    subgraph Storage
-        F1[data/ - RAG PDFs]
-        F2[notebook/ - EDA]
-        F3[templates/ - HTML UI]
-    end
-
-    D1 --> F1
-    B1 --> F2
-    E1 --> F3
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '14px'}}}%%
+graph TD
+    %% ========== System Overview ==========
+    A[User] --> B[Web Interface]
+    B --> C{Select Service}
+    
+    %% ========== Skin Analysis Path ==========
+    C --> |Skin Analysis| D[Upload Image]
+    D --> E["Validate File (PNG/JPG/JPEG)"]
+    E --> F["Preprocess Image\n(Resize 224x224, Normalize)"]
+    F --> G["MobileNetV2 Prediction\n(85% Accuracy)"]
+    G --> H["Display Diagnosis\n(Eczema, Psoriasis, Warts, etc.)"]
+    
+    %% ========== Health Report Path ==========
+    C --> |Health Report| I["Input Parameters\n(BMI, BP, Cholesterol)"]
+    I --> J[Validate Data Ranges]
+    J --> K["Rule Engine Analysis\n(10+ Health Metrics)"]
+    K --> L[Generate Summary]
+    
+    %% ========== Document Q&A Path ==========
+    C --> |Document Q&A| M[Upload PDF/Ask Question]
+    M --> N["Text Chunking\n(LangChain Splitter)"]
+    N --> O["Embed Documents\n(Sentence Transformers)"]
+    O --> P[FAISS Vector Store]
+    P --> Q["Query Mistral-7B\n(via Ollama)"]
+    Q --> R["Display Answer\n(With Source PDFs)"]
+    
+    %% ========== Data Flow ==========
+    H --> S[Results Page]
+    L --> S
+    R --> S
+    
+    %% ========== Styling ==========
+    classDef ui fill:#e3f2fd,stroke:#2196f3;
+    classDef ml fill:#c8e6c9,stroke:#4caf50;
+    classDef data fill:#fff3e0,stroke:#ff9800;
+    
+    class A,B,C,S ui;
+    class G,K,Q ml;
+    class E,F,J,N,O data;
 ```
