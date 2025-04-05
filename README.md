@@ -118,59 +118,46 @@ LangChain for RAG implementation
 Sentence Transformers for embeddings
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '14px', 'primaryColor': '#f0faf7'}}}%%
-graph TD
-    %% ========== System Overview ==========
-    A[User] --> B[Web Interface]
-    B --> C{Select Service}
-    
-    %% ========== Skin Analysis Path ==========
-    C --> |Skin Analysis| D[Upload Image]
-    D --> E[Validate File<br>(PNG/JPG/JPEG)]
-    E --> F[Preprocess Image<br><sub>Resize 224x224, Normalize</sub>]
-    F --> G[MobileNetV2 Prediction<br><i>85% Accuracy</i>]
-    G --> H[Display Diagnosis<br><sub>Eczema, Psoriasis, Warts, etc.</sub>]
-    
-    %% ========== Health Report Path ==========
-    C --> |Health Report| I[Input Parameters<br><sub>BMI, BP, Cholesterol</sub>]
-    I --> J[Validate Data Ranges]
-    J --> K[Rule Engine Analysis<br><sub>10+ Health Metrics</sub>]
-    K --> L[Generate Summary<br><sub>Personalized Recommendations</sub>]
-    
-    %% ========== Document Q&A Path ==========
-    C --> |Document Q&A| M[Upload PDF/Ask Question]
-    M --> N[Text Chunking<br><sub>LangChain Splitter</sub>]
-    N --> O[Embed Documents<br><sub>Sentence Transformers</sub>]
-    O --> P[FAISS Vector Store]
-    P --> Q[Query Mistral-7B<br><sub>via Ollama</sub>]
-    Q --> R[Display Answer<br><sub>With Source PDFs</sub>]
-    
-    %% ========== Backend Services ==========
-    subgraph Backend Systems
-        direction TB
-        S[Flask Server] --> T[TensorFlow 2.12]
-        S --> U[Ollama API]
-        S --> V[FAISS DB]
-        T -.-> G
-        U -.-> Q
-        V -.-> P
+flowchart TD
+    A[User Input] -->|Upload Image| B[Skin Condition Analysis]
+    A -->|Enter Health Parameters| C[Health Report Generation]
+    A -->|Upload Medical Document / Ask Question| D[Medical Document Q&A]
+
+    B --> B1[MobileNetV2 Model]
+    B1 --> B2[Skin Condition Prediction]
+    B2 --> B3[Real-time Confidence Scoring]
+
+    C --> C1[Parameter Analysis (BMI, BP, etc.)]
+    C1 --> C2[Rule-Based Risk Assessment]
+    C2 --> C3[Personalized Recommendations]
+
+    D --> D1[RAG System with Mistral-7B]
+    D1 --> D2[FAISS Vector Store]
+    D2 --> D3[Contextual Answer Generation]
+    D3 --> D4[Source Citation]
+
+    subgraph Backend Components
+        E1[Flask Web Server]
+        E2[app.py]
+        E3[predict_pipeline.py]
+        E4[rag_system.py]
+        E5[src/components/]
     end
-    
-    %% ========== Data Flow ==========
-    H --> W[Results Page]
-    L --> W
-    R --> W
-    
-    %% ========== Styling ==========
-    classDef ui fill:#e3f2fd,stroke:#2196f3;
-    classDef ml fill#c8e6c9,stroke#4caf50;
-    classDef data fill#fff3e0,stroke#ff9800;
-    classDef storage fill#fce4ec,stroke#e91e63;
-    classDef decision fill#ede7f6,stroke#673ab7;
-    
-    class A,B,C,W ui;
-    class G,K,Q,T ml;
-    class E,F,J,N,O data;
-    class P,V storage;
-    class C decision;
+
+    B3 --> E3
+    C3 --> E5
+    D4 --> E4
+    E1 --> E2
+    E1 --> E3
+    E1 --> E4
+
+    subgraph Storage
+        F1[data/ - RAG PDFs]
+        F2[notebook/ - EDA]
+        F3[templates/ - HTML UI]
+    end
+
+    D1 --> F1
+    B1 --> F2
+    E1 --> F3
 ```
