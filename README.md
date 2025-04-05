@@ -27,7 +27,6 @@ A comprehensive health analysis system integrating skin condition prediction bas
 1. Clone repository:
 ```bash
 git clone https://github.com/Asish2107/DL-Project.git
-cd DL-Project
 ```
 
 2. Install dependencies:
