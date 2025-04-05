@@ -132,7 +132,7 @@ Copy
 git push origin feature/your-feature
 Open a Pull Request
 ```
-
+```bash
 License
 Distributed under MIT License. See LICENSE for details.
 
@@ -142,3 +142,4 @@ Ollama for local LLM infrastructure
 LangChain for RAG implementation
 
 Sentence Transformers for embeddings
+```
