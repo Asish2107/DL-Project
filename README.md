@@ -33,14 +33,12 @@ cd DL-Project
 2. Install dependencies:
 
 ```bash
-Copy
 pip install -r requirements.txt
 ```
 
 3. Set up Ollama (required for Q&A system):
 
 ```bash
-Copy
 ollama serve # Run this command in one terminal for the continous run of ollama model.
 ollama pull mistral # Run this command in new terminal.
 ```
