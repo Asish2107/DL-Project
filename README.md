@@ -38,7 +38,7 @@ pip install -r requirements.txt
 3. Set up Ollama (required for Q&A system):
 
 ```bash
-ollama serve # Run this command in one terminal for the continous run of ollama model.
+ollama serve # Run this in a separate terminal for the continous running of ollama model.
 ollama pull mistral # Run this command in new terminal.
 ```
 
@@ -52,7 +52,7 @@ Access web interface at http://localhost:5001
 
 Use features through web UI:
 
-Skin Analysis: Upload dermatology images(note - For now this model is trained only on skin diseases of type Eczema, Atopic Dermatitis, Melanocytic Nevi, Psoriasis,Seborrheic Keratoses, Tinea Ringworm Candidiasis and Warts Molluscum)
+Skin Analysis: Upload dermatology images(Note - For now this model is trained only on skin diseases of type Eczema, Atopic Dermatitis, Melanocytic Nevi, Psoriasis,Seborrheic Keratoses, Tinea Ringworm Candidiasis and Warts Molluscum)
 
 Health Report: Input health parameters
 
