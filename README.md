@@ -38,7 +38,7 @@ pip install -r requirements.txt
 3. Set up Ollama (required for Q&A system):
 
 ```bash
-ollama serve # Run this in a separate terminal for the continous running of ollama model.
+ollama serve # Run this in a separate terminal for the continous running of ollama.
 ollama pull mistral # Run this command in new terminal.
 ```
 
