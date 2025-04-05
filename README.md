@@ -9,7 +9,7 @@ A comprehensive health analysis system integrating skin condition prediction, he
 
 ### 🩺 Skin Condition Analysis
 - MobileNetV2-based image classification
-- 95%+ accuracy on common skin conditions
+- 85% accuracy on common skin conditions
 - Real-time confidence scoring
 
 ### 📊 Health Report Generation
@@ -25,22 +25,25 @@ A comprehensive health analysis system integrating skin condition prediction, he
 ## Installation
 
 1. Clone repository:
-```bash
+bash
 git clone https://github.com/Asish2107/DL-Project.git
 cd DL-Project
-Install dependencies:
+
+2. Install dependencies:
 
 bash
 Copy
 pip install -r requirements.txt
-Set up Ollama (required for Q&A system):
+
+3. Set up Ollama (required for Q&A system):
 
 bash
 Copy
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull mistral
 Usage
-Start the Flask server:
+
+4. Start the Flask server:
 
 bash
 Copy
@@ -56,6 +59,7 @@ Health Report: Input health parameters
 Document Q&A: Ask questions about medical texts
 
 Project Structure
+
 Copy
 DL-Project/
 ├── app.py                 # Main application entry point
@@ -67,7 +71,9 @@ DL-Project/
 │   └── uploads/           # User-uploaded images
 ├── templates/             # Flask HTML templates
 └── requirements.txt       # Dependency list
+
 Technologies Used
+
 Core ML:
 
 TensorFlow 2.12.0
