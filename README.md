@@ -62,12 +62,11 @@ Document Q&A: Ask questions about medical texts
 
 ## Project Structure
 ```bash
-Copy
 DL-Project/
 ├── data/                  # Source documents for RAG system
 ├── notebook/              # EDA performed on skin condition prediction data set
 ├── src/
-│   ├── components/        # Health report rules engine & Skin condition prediction training model.
+│   ├── components/        # Health report rules engine & Skin condition model training.
 │   └── exception.py       # Exception Handling
 │   └── logger.py          # Log Handling
 ├── templates/             # Flask HTML templates
@@ -81,11 +80,11 @@ DL-Project/
 ```bash
 1. Core ML:
 
-TensorFlow 2.12.0
+TensorFlow 2.12.0 
 
 MobileNetV2 (ImageNet weights)
 
-NumPy/Pandas (Data processing)
+NumPy/Pandas/ScikitLearn (Data processing)
 
 2. NLP & Embeddings:
 
@@ -105,7 +104,7 @@ Werkzeug (Secure file handling)
 
 FAISS (Vector storage)
 
-BeautifulSoup (HTML processing)
+HTML
 ```
 
 ## License
