@@ -32,9 +32,10 @@ cd DL-Project
 
 2. Install dependencies:
 
-bash
+```bash
 Copy
 pip install -r requirements.txt
+```
 
 3. Set up Ollama (required for Q&A system):
 
@@ -42,11 +43,13 @@ pip install -r requirements.txt
 Copy
 curl -fsSL https://ollama.com/install.sh | sh
 ollama pull mistral
-Usage
+```
 
-4. Start the Flask server:
+## Usage
 
-bash
+1. Start the Flask server:
+
+```bash
 Copy
 python app.py
 Access web interface at http://localhost:5001
@@ -58,9 +61,10 @@ Skin Analysis: Upload dermatology images
 Health Report: Input health parameters
 
 Document Q&A: Ask questions about medical texts
+```
 
-Project Structure
-
+## Project Structure
+```bash
 Copy
 DL-Project/
 ├── app.py                 # Main application entry point
@@ -72,10 +76,11 @@ DL-Project/
 │   └── uploads/           # User-uploaded images
 ├── templates/             # Flask HTML templates
 └── requirements.txt       # Dependency list
+```
 
-Technologies Used
-
-Core ML:
+## Technologies Used
+```bash
+1. Core ML:
 
 TensorFlow 2.12.0
 
@@ -83,7 +88,7 @@ MobileNetV2 (ImageNet weights)
 
 NumPy/Pandas (Data processing)
 
-NLP & Embeddings:
+2. NLP & Embeddings:
 
 Ollama (Mistral-7B)
 
@@ -91,37 +96,42 @@ LangChain
 
 Sentence-Transformers (all-MiniLM-L6-v2)
 
-Web Framework:
+3. Web Framework:
 
 Flask 2.3.2
 
 Werkzeug (Secure file handling)
 
-Utilities:
+4. Utilities:
 
 FAISS (Vector storage)
 
 BeautifulSoup (HTML processing)
+```
 
-Contributing
+# Contributing
+
 Fork the repository
 
 Create your feature branch:
 
-bash
+```bash
 Copy
 git checkout -b feature/your-feature
 Commit changes:
+```
 
-bash
+```bash
 Copy
 git commit -m 'Add some feature'
 Push to branch:
+```
 
-bash
+```bash
 Copy
 git push origin feature/your-feature
 Open a Pull Request
+```
 
 License
 Distributed under MIT License. See LICENSE for details.
