@@ -68,7 +68,7 @@ Document Q&A: Ask questions about medical texts
 Copy
 DL-Project/
 ├── data/                  # Source documents for RAG system
-├── notebook/              # EDA performed on skin condition prediction pipeline
+├── notebook/              # EDA performed on skin condition prediction data set
 ├── src/
 │   ├── components/        # Health report rules engine & Skin condition prediction training model.
 │   └── exception.py       # Exception Handling
