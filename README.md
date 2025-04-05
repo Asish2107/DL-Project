@@ -111,30 +111,6 @@ FAISS (Vector storage)
 BeautifulSoup (HTML processing)
 ```
 
-# Contributing
-
-Fork the repository
-
-Create your feature branch:
-
-```bash
-Copy
-git checkout -b feature/your-feature
-Commit changes:
-```
-
-```bash
-Copy
-git commit -m 'Add some feature'
-Push to branch:
-```
-
-```bash
-Copy
-git push origin feature/your-feature
-Open a Pull Request
-```
-
 ## License
 Distributed under MIT License. See LICENSE for details.
 
