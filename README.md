@@ -67,14 +67,16 @@ Document Q&A: Ask questions about medical texts
 ```bash
 Copy
 DL-Project/
+├── data/                  # Source documents for RAG system
+├── notebook/              # EDA performed on skin condition prediction pipeline
+├── src/
+│   ├── components/        # Health report rules engine & Skin condition prediction training model.
+│   └── exception.py       # Exception Handling
+│   └── logger.py          # Log Handling
+├── templates/             # Flask HTML templates
 ├── app.py                 # Main application entry point
 ├── predict_pipeline.py    # Skin condition prediction pipeline
-├── src/
-│   ├── components/        # Health report rules engine
-│   └── utils/             # Helper functions
-├── static/                # CSS/JS assets
-│   └── uploads/           # User-uploaded images
-├── templates/             # Flask HTML templates
+├── rag_system.py          # RAG system with Mistral-7B LLM
 └── requirements.txt       # Dependency list
 ```
 
