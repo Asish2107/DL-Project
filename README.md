@@ -53,7 +53,7 @@ Access web interface at http://localhost:5001
 
 Use features through web UI:
 
-Skin Analysis: Upload dermatology images(note - For now this model is trained only on skin diseases on type Eczema, Atopic Dermatitis, Melanocytic Nevi, Psoriasis,Seborrheic Keratoses, Tinea Ringworm Candidiasis and Warts Molluscum)
+Skin Analysis: Upload dermatology images(note - For now this model is trained only on skin diseases of type Eczema, Atopic Dermatitis, Melanocytic Nevi, Psoriasis,Seborrheic Keratoses, Tinea Ringworm Candidiasis and Warts Molluscum)
 
 Health Report: Input health parameters
 
