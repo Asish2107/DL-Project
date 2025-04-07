@@ -112,15 +112,27 @@ def initialize_rag_system():
     # Initialize LLM
     llm = Ollama(
         model=LLM_MODEL,
-        temperature=0.3,
-        timeout=300  # Increase for large documents
+        temperature=0.3,#determines how random or deterministic the model has to be
+        timeout=300  # Increase for large documents, wait time after which queries response should be timedout.
     )
     
     # Create QA chain
+    # Create and return a RetrievalQA chain using a specified LLM and retriever.
+    # This setup enables a question-answering system over a document collection.
     return RetrievalQA.from_chain_type(
+        # The language model (LLM) to be used for generating answers.
+        # This should be an instance of a model supported by LangChain (e.g., OpenAI's GPT).
         llm=llm,
+        # The chain type determines how retrieved documents are processed.
+        # "stuff" means all documents are stuffed into a single prompt and passed to the LLM.
+        # Best for small numbers of short documents.
         chain_type="stuff",
+        # This converts the vector store into a retriever object.
+        # The retriever is responsible for finding the most relevant documents for a user's query.
+        # `search_kwargs={"k": 3}` tells it to retrieve the top 3 most similar documents.
         retriever=vector_store.as_retriever(search_kwargs={"k": 3}),
+        # This ensures that the output will include the documents that were retrieved.
+        # Helpful for traceability, citations, or debugging purposes.
         return_source_documents=True
     )
 
